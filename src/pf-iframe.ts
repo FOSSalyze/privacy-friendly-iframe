@@ -9,6 +9,7 @@ const attributeMap = new Map<string, string>([
     ['frameborder', 'frameborder'],
     ['allow', 'allow'],
     ['iframe-id', 'id'],
+    ['iframe-class', 'class']
 ]);
 
 const observedAttributes = Array.from(Object.keys(attributeMap));
