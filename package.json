@@ -2,14 +2,26 @@
   "name": "@fossalyze/privacy-friendly-iframe",
   "version": "1.0.0",
   "description": "Delay rendering an iframe until consent has been provided.",
+  "watch": {
+    "prepare-dev": {
+      "patterns": ["src"],
+      "extensions": "ts",
+      "quiet": false,
+      "runOnChangeOnly": false
+    }
+  },
   "scripts": {
+    "dev": "concurrently --kill-others \"http-server -c-1 ./test/\" \"npm-watch prepare-dev\"",
+    "prepare-dev": "npm run build && cp ./dist/pf-iframe.js ./test",
     "build": "tsc",
-    "prepare-test": "npm run build && cp ./dist/pf-iframe.js ./test",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Timothy Gillespie (FOSSalyze GmbH)",
   "license": "GPL-3.0-only",
   "devDependencies": {
+    "concurrently": "^8.2.2",
+    "http-server": "^14.1.1",
+    "npm-watch": "^0.11.0",
     "typescript": "^5.3.3"
   }
 }
