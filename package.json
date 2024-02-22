@@ -1,0 +1,15 @@
+{
+  "name": "@fossalyze/privacy-friendly-iframe",
+  "version": "1.0.0",
+  "description": "Delay rendering an iframe until consent has been provided.",
+  "scripts": {
+    "build": "tsc",
+    "prepare-test": "npm run build && cp ./dist/pf-iframe.js ./test",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Timothy Gillespie (FOSSalyze GmbH)",
+  "license": "GPL-3.0-only",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
