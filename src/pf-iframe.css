@@ -1,0 +1,28 @@
+pf-iframe > div.pf-iframe--consent-container {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+pf-iframe > div.pf-iframe--consent-container > div.pf-iframe--consent-content-container {
+    text-align: center;
+    position:relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+pf-iframe > div.pf-iframe--consent-container > div.pf-iframe--consent-content-container > p.pf-iframe--consent-message {
+    color: white;
+    margin: 10px;
+}
+
+pf-iframe > div.pf-iframe--consent-container > div.pf-iframe--consent-content-container > button.pf-iframe--consent-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 5px;
+    margin: 10px;
+}

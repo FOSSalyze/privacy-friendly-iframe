@@ -8,6 +8,8 @@ const attributeMap = new Map<string, string>([
     ['title', 'title'],
     ['frameborder', 'frameborder'],
     ['allow', 'allow'],
+    
+    // Not 1:1 mappings
     ['iframe-id', 'id'],
     ['iframe-class', 'class']
 ]);
@@ -21,11 +23,20 @@ class PrivacyFriendlyIFrame extends HTMLElement {
         super();
     }
 
+    generateConsentTemplate = (width: string | null, height: string | null) => `
+    <div class="pf-iframe--consent-container" style="width: ${width ?? '300'}px; height: ${height ?? '150'}px">
+        <div class="pf-iframe--consent-content-container">
+            <p class="pf-iframe--consent-message">Do you want to view this content? It will transmit data to ${this.getAttribute('src')}.</p>
+            <button class="pf-iframe--consent-button">Yes</button>
+        </div>
+    </div>`;
+
+    onConsent = (listener: () => any) => this.querySelector('button')?.addEventListener('click', listener);
+    
     connectedCallback() {
-        this.innerHTML = `<div style="width: ${this.getAttribute('width')}px; height: ${this.getAttribute('height')}px"><p>Do you want to view this content? It will transmit data to ${this.getAttribute('src')}.<p><button>Yes</button></div>`
-        this.querySelector('button')?.addEventListener('click', () => {
-            this.accept();
-        })
+        // should default to 300x150 pixels when no size is specified per convention
+        this.innerHTML = this.generateConsentTemplate(this.getAttribute('width'), this.getAttribute('height')); 
+        this.onConsent(this.accept.bind(this));
     }
 
     accept() {
