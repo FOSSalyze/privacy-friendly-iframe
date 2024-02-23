@@ -7,21 +7,25 @@
       "patterns": [
         "src"
       ],
-      "extensions": "ts",
+      "extensions": "ts,css",
       "quiet": false,
       "runOnChangeOnly": false
     }
   },
   "scripts": {
     "dev": "concurrently --kill-others \"http-server -c-1 ./test/\" \"npm-watch prepare-dev\"",
-    "prepare-dev": "npm run build &&  cp -r ./dist/ ./test/pf-iframe",
-    "build": "rm -rf ./build && rm -rf ./dist && tsc && mkdir -p ./dist/prod ./dist/lib && cp -r ./build/ ./dist/lib && terser ./build/pf-iframe.js --output ./dist/prod/pf-iframe.min.js",
+    "prepare-dev": "rm -rf ./test/pf-iframe && npm run build &&  cp -r ./dist/ ./test/pf-iframe",
+    "build": "npm run pre-build && npm run dist:lib && npm run dist:prod",
+    "pre-build": "rm -rf ./build && tsc && cp ./src/*.css ./build",
+    "dist:lib": "rm -rf ./dist/lib && mkdir -p ./dist/lib && cp ./build/* ./dist/lib",
+    "dist:prod": "rm -rf ./dist/prod && mkdir -p ./dist/prod && terser ./build/pf-iframe.js --output ./dist/prod/pf-iframe.min.js && cleancss -o ./dist/prod/pf-iframe.min.css ./build/pf-iframe.css",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
   "author": "Timothy Gillespie (FOSSalyze GmbH)",
   "license": "GPL-3.0-only",
   "devDependencies": {
+    "clean-css-cli": "^5.6.3",
     "concurrently": "^8.2.2",
     "cypress": "^13.6.6",
     "http-server": "^14.1.1",
