@@ -1,6 +1,8 @@
 /node_modules
+/build
 /dist
 /.vscode
+/cypress/downloads
 
 # This should be always freshly built and copied in
 /test/pf-iframe.js
