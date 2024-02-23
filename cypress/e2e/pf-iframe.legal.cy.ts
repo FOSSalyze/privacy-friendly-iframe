@@ -1,11 +1,8 @@
-const testBaseUrl = 'http://localhost:8080';
-const exampleIFrameSrc = 'https://youtu.be/bHQqvYy5KYo';
-
 describe('legal specification', () => {
     it('no data transfer by default', () => {
-        cy.intercept('https://youtu.be/*').as('anyRequest');
+        cy.intercept('https://www.youtube.com/*').as('anyRequest');
 
-        cy.visit(testBaseUrl);
+        cy.visit('/');
 
         // Not ideal, but the best I could think of - instantly quickly @anyRequest might hide a potential issue 
         cy.wait(2000);
