@@ -14,8 +14,8 @@
   },
   "scripts": {
     "dev": "concurrently --kill-others \"http-server -c-1 ./test/\" \"npm-watch prepare-dev\"",
-    "prepare-dev": "npm run build &&  cp ./dist/pf-iframe.js ./test",
-    "build": "rm -rf ./build && rm -rf ./dist && tsc && mkdir -p ./dist/ && cp ./build/*.d.ts ./dist/ && terser ./build/pf-iframe.js --output ./dist/pf-iframe.js",
+    "prepare-dev": "npm run build &&  cp -r ./dist/ ./test/pf-iframe",
+    "build": "rm -rf ./build && rm -rf ./dist && tsc && mkdir -p ./dist/prod ./dist/lib && cp -r ./build/ ./dist/lib && terser ./build/pf-iframe.js --output ./dist/prod/pf-iframe.min.js",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
