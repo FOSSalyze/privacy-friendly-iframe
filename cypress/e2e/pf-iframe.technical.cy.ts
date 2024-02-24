@@ -20,7 +20,7 @@ const attributeMap = [
 
 
 describe('technical specification', () => {
-    it('attributes are reached through', () => {
+    it('attributes are passed through', () => {
         cy.visit('/');
 
         // Inner iframe only exists after clicking the button
@@ -38,12 +38,11 @@ describe('technical specification', () => {
         // Changed Values
         for (const singleAttribute of attributeMap) {
             cy.get('pf-iframe').invoke('attr', singleAttribute.pfIFrameName, singleAttribute.exampleValue).then(() => {
-                cy.get('pf-iframe').invoke('attr', singleAttribute.pfIFrameName).then((pfIframeAttribute) => {
-                    cy.get('iframe').invoke('attr', singleAttribute.iFrameName).then((iFrameAttribute) => {
-                        expect(pfIframeAttribute).to.equal(iFrameAttribute);
-                    });
+                cy.get('iframe').invoke('attr', singleAttribute.iFrameName).then((iFrameAttribute) => {
+                    expect(iFrameAttribute).to.equal(singleAttribute.exampleValue);
                 });
             });
         }
     });
+
 });
