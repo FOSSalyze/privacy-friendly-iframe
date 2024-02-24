@@ -67,11 +67,9 @@ class PrivacyFriendlyIFrame extends HTMLElement {
         super();
     }
 
-    config = getConfig(this.getAttribute('id'));
+    private config = getConfig(this.getAttribute('id'));
 
-    // should default to 300x150 pixels when no size is specified per convention
     generateConsentTemplate = this.config.generateConsentTemplate
-
     fetchConsentElement = this.config.fetchConsentElement;
     checkExistingConsent = this.config.checkExistingConsent;
     onConsent = this.config?.onConsent;
@@ -114,11 +112,27 @@ class PrivacyFriendlyIFrame extends HTMLElement {
 
     static observedAttributes: string[] = observedAttributes;
 
-    attributeChangedCallback(attributeName: string, oldValue: string, newValue: string) {
+    attributeChangedCallback(attributeName: string, oldValue: string | null, newValue: string | null) {
+        if(attributeName === 'id') {
+            this.reloadConfig();
+        }
+        
         const mappedAttributeName = attributeMap.get(attributeName);
         if (mappedAttributeName != null) {
-            this.iFrameElement.setAttribute(mappedAttributeName, newValue);
+            if(newValue == null) {
+                this.iFrameElement.removeAttribute(mappedAttributeName);
+            } else {
+                this.iFrameElement.setAttribute(mappedAttributeName, newValue);
+            }
         }
+    }
+
+    reloadConfig() {
+        this.config = getConfig(this.getAttribute('id'));
+        this.generateConsentTemplate = this.config.generateConsentTemplate;
+        this.fetchConsentElement = this.config.fetchConsentElement;
+        this.checkExistingConsent = this.config.checkExistingConsent;
+        this.onConsent = this.config?.onConsent;
     }
 }
 
