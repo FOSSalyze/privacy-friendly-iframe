@@ -31,7 +31,7 @@ const attributeMap = new Map<string, string>([
     ['iframe-class', 'class']
 ]);
 
-const observedAttributes = Array.from(Object.keys(attributeMap));
+const observedAttributes = Array.from(attributeMap.keys());
 
 const fallbackDefaultConfig: Required<PFIFrameConfig> = {
     onConsent: () => {},
