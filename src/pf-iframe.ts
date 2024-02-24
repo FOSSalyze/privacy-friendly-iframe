@@ -37,7 +37,10 @@ const attributeMap = new Map<string, string>([
     ['iframe-name', 'name'],
 ]);
 
-const observedAttributes = Array.from(attributeMap.keys());
+const observedAttributes = [
+    'id', 
+    'showiframe', 
+    ...Array.from(attributeMap.keys())];
 
 const fallbackDefaultConfig: Required<PFIFrameConfig> = {
     onConsent: () => {},
@@ -60,9 +63,22 @@ const getConfig: (id?: string | null) => Required<PFIFrameConfig> = (id?: string
     return {...fallbackDefaultConfig, ...(window._pfiFrameConfig?.default ?? {})};
 };
 
+const isAttributeTrue = (attribute: string | null) => attribute === '' || attribute === 'true';
+
 class PrivacyFriendlyIFrame extends HTMLElement {
     iFrameElement = document.createElement('iframe') as HTMLIFrameElement;
-    private _mounted = false;
+    get showIFrame(): boolean {
+        return isAttributeTrue(this.getAttribute('showiframe'));
+    }
+
+    set showIFrame(value: boolean) {
+        if (value) {
+            this.setAttribute('showiframe', '');
+        } else {
+            this.removeAttribute('showiframe');
+        }
+    }
+    
     constructor() {
         super();
     }
@@ -90,24 +106,21 @@ class PrivacyFriendlyIFrame extends HTMLElement {
         }
     }
 
-    accept() {
-        this.innerHTML = '';
-        this.mountIFrame();
-    }
+    accept = () => {this.showIFrame = true};
 
     private mountIFrame() {
-        if (!this._mounted) {
-            this._mounted = true;
-            for (const singleAttribute of Object.values(this.attributes)) {
-                const mappedAttributeName = attributeMap.get(singleAttribute.name);
-                if (mappedAttributeName != null) {
-                    this.iFrameElement.setAttribute(mappedAttributeName, singleAttribute.value);
-                }
+        this.innerHTML = '';
+        for (const singleAttribute of Object.values(this.attributes)) {
+            const mappedAttributeName = attributeMap.get(singleAttribute.name);
+            if (mappedAttributeName != null) {
+                this.iFrameElement.setAttribute(mappedAttributeName, singleAttribute.value);
             }
-            this.appendChild(this.iFrameElement);
-        } else {
-            throw new Error('IFrame attempted to be mounted twice.');
         }
+        this.appendChild(this.iFrameElement);
+    }
+
+    private unmountIFrame() {
+        this.innerHTML = this.generateConsentTemplate(this.getAttribute('width') ?? '300', this.getAttribute('height') ?? '150', this.getAttribute('src') ?? 'ERROR', this);
     }
 
     static observedAttributes: string[] = observedAttributes;
@@ -116,7 +129,17 @@ class PrivacyFriendlyIFrame extends HTMLElement {
         if(attributeName === 'id') {
             this.reloadConfig();
         }
-        
+
+        if(attributeName === 'showiframe') {
+            if(isAttributeTrue(newValue) !== isAttributeTrue(oldValue)) {
+                if(isAttributeTrue(newValue)) {
+                    this.mountIFrame();
+                } else {
+                    this.unmountIFrame();
+                }
+            }
+        }
+
         const mappedAttributeName = attributeMap.get(attributeName);
         if (mappedAttributeName != null) {
             if(newValue == null) {
