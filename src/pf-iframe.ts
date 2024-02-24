@@ -21,14 +21,20 @@ const attributeMap = new Map<string, string>([
     ['width', 'width'],
     ['height', 'height'],
     ['src', 'src'],
+    ['srcdoc', 'srcdoc'],
+    ['allow', 'allow'],
     ['allowfullscreen', 'allowfullscreen'],
+    ['allowpaymentrequest', 'allowpaymentrequest'],
     ['title', 'title'],
     ['frameborder', 'frameborder'],
-    ['allow', 'allow'],
+    ['sandbox', 'sandbox'],
+    ['referrerpolicy', 'referrerpolicy'],
+    ['loading', 'loading'],
     
     // Not 1:1 mappings
     ['iframe-id', 'id'],
-    ['iframe-class', 'class']
+    ['iframe-class', 'class'],
+    ['iframe-name', 'name'],
 ]);
 
 const observedAttributes = Array.from(attributeMap.keys());
