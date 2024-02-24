@@ -1,3 +1,7 @@
+// This approach will replace all iframes with a custom element pf-iframe when they are being injected by JS or any other source of modification
+// This is not reliable, because the initial iframe is injected and then quickly replaced by the custom element
+// This will abort the connection the iframe would make, it's better than nothing - but does not guarantee no data being transferred
+// However, when used in the test page it will usually work and prevent any data from being transferred
 const observer = new MutationObserver(mutations => {
     mutations.forEach(mutation => {
         mutation.addedNodes.forEach(node => {
