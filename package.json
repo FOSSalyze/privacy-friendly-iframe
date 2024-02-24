@@ -18,7 +18,7 @@
     "build": "npm run pre-build && npm run dist:lib && npm run dist:prod",
     "pre-build": "rm -rf ./build && tsc && cp ./src/*.css ./build",
     "dist:lib": "rm -rf ./dist/lib && mkdir -p ./dist/lib && cp ./build/* ./dist/lib",
-    "dist:prod": "rm -rf ./dist/prod && mkdir -p ./dist/prod && terser ./build/pf-iframe.js --output ./dist/prod/pf-iframe.min.js && cleancss -o ./dist/prod/pf-iframe.min.css ./build/pf-iframe.css",
+    "dist:prod": "rm -rf ./dist/prod && mkdir -p ./dist/prod && terser ./build/pf-iframe.js --output ./dist/prod/pf-iframe.min.js && terser ./build/replace-all-dynamic-iframe.js --output ./dist/prod/replace-all-dynamic-iframe.min.js && terser ./build/replace-all-static-iframe.js --output ./dist/prod/replace-all-static-iframe.min.js && cleancss -o ./dist/prod/pf-iframe.min.css ./build/pf-iframe.css",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
