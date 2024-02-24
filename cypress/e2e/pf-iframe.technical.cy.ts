@@ -45,4 +45,22 @@ describe('technical specification', () => {
         }
     });
 
+    it('removed attributes are also removed on iframe', () => {
+        cy.visit('/');
+
+        // Inner iframe only exists after clicking the button
+        cy.get('button').click();
+
+        // Changed Values
+        for (const singleAttribute of attributeMap) {
+            // First set, then unset attribute to verify that it is removed
+            cy.get('pf-iframe').invoke('attr', singleAttribute.pfIFrameName, singleAttribute.exampleValue).then(() => {
+                cy.get('pf-iframe').invoke('attr', singleAttribute.pfIFrameName, null).then(() => {
+                    cy.get('iframe').invoke('attr', singleAttribute.iFrameName).then((iFrameAttribute) => {
+                        expect(iFrameAttribute).to.not.exist;
+                    });
+                });
+            });
+        }
+    });
 });
