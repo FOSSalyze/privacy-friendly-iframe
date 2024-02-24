@@ -63,4 +63,27 @@ describe('technical specification', () => {
             });
         }
     });
+
+    describe('special attribute showIFrame', () => {
+        it('showIFrame is reflected', () => {
+            cy.visit('/');
+            cy.get('pf-iframe').invoke('attr', 'showiframe').should('not.exist');
+
+            cy.get('button').click();
+            cy.get('pf-iframe').invoke('attr', 'showiframe').should('exist');
+        });
+
+        it('changing the showIFrame attribute shows/hides the iframe', () => {
+            cy.visit('/');
+            
+            cy.get('pf-iframe').invoke('attr', 'showiframe').should('not.exist');
+            cy.get('iframe').should('not.exist');
+            
+            cy.get('pf-iframe').invoke('attr', 'showiframe', 'true');
+            cy.get('iframe').should('exist');
+
+            cy.get('pf-iframe').invoke('attr', 'showiframe', null);
+            cy.get('iframe').should('not.exist');
+        });
+    })
 });
