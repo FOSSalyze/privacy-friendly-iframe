@@ -13,6 +13,7 @@ steps:
     image: *cypress_browser_image
     commands:
       - npm run build
+      - npm run prepare-dev
 
   - name: test_chrome
     image: *cypress_browser_image
