@@ -9,8 +9,6 @@ steps:
     commands:
       - npm run dev
     detach: true
-    ports:
-      - 8080:8080
 
   - name: run_cypress_tests
     image: cypress/browsers:latest
