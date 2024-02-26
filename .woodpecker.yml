@@ -1,10 +1,10 @@
-pipeline:
-  install_dependencies:
+steps:
+  - name: install_dependencies
     image: node:latest
     commands:
       - npm install
 
-  run_dev_server:
+  - name: run_dev_server
     image: node:latest
     commands:
       - npm run dev
@@ -12,7 +12,7 @@ pipeline:
     ports:
       - 8080:8080
 
-  run_cypress_tests:
+  - name: run_cypress_tests
     image: cypress/browsers:latest
     commands:
       - npm run cypress:run -- --browser chrome
