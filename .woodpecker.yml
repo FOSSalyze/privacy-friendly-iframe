@@ -1,0 +1,20 @@
+pipeline:
+  install_dependencies:
+    image: node:latest
+    commands:
+      - npm install
+
+  run_dev_server:
+    image: node:latest
+    commands:
+      - npm run dev
+    detach: true
+    ports:
+      - 8080:8080
+
+  run_cypress_tests:
+    image: cypress/browsers:latest
+    commands:
+      - npm run cypress:run -- --browser chrome
+      - npm run cypress:run -- --browser firefox
+      - npm run cypress:run -- --browser edge
