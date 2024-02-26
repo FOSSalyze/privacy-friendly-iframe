@@ -1,5 +1,7 @@
 variables:
-  - &cypress_browser_image cypress/included:cypress-13.6.6-node-20.11.0-chrome-121.0.6167.184-1-ff-123.0-edge-121.0.2277.128-1
+  &cypress_browser_image cypress/included:cypress-13.6.6-node-20.11.0-chrome-121.0.6167.184-1-ff-123.0-edge-121.0.2277.128-1
+  &start_server
+    - npm run dev-server
 
 steps:
   - name: install
@@ -12,27 +14,20 @@ steps:
     commands:
       - npm run build
 
-
-  - name: start_server
-    image: *cypress_browser_image
-    commands:
-      - npm run dev-server
-    detach: true
-
   - name: test_chrome
     image: *cypress_browser_image
     commands:
+      - <<: *start_server
       - npx cypress run --browser chrome
-    failure: ignore
 
   - name: test_firefox
     image: *cypress_browser_image
     commands:
+      - <<: *start_server
       - npx cypress run --browser firefox
-    failure: ignore
 
   - name: test_edge
     image: *cypress_browser_image
     commands:
+      - <<: *start_server
       - npx cypress run --browser edge
-    failure: ignore
