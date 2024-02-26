@@ -12,13 +12,13 @@ pipeline:
       - npm run dev
     detach: true
 
-run_cypress_tests:
-  name: run_cypress_tests
-  image: cypress/browsers:latest
-  commands:
-    - npm install
-    - npx cypress verify || npx cypress install
-    - npx cypress run --browser chrome
-    - npx cypress run --browser firefox
-    - npx cypress run --browser edge
+  run_cypress_tests:
+    name: run_cypress_tests
+    image: cypress/browsers:latest
+    commands:
+      - npm install
+      - npx cypress verify || npx cypress install
+      - npx cypress run --browser chrome
+      - npx cypress run --browser firefox
+      - npx cypress run --browser edge
 
