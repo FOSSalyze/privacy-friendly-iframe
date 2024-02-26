@@ -1,18 +1,29 @@
-steps:
-  - name: install_dependencies
+pipeline:
+  install_dependencies:
+    name: install_dependencies
     image: node:latest
     commands:
       - npm install
+      - $(npm bin)/cypress verify || $(npm bin)/cypress install
 
-  - name: run_dev_server
+  run_dev_server:
+    name: run_dev_server
     image: node:latest
     commands:
       - npm run dev
     detach: true
 
-  - name: run_cypress_tests
+  run_cypress_tests:
+    name: run_cypress_tests
     image: cypress/browsers:latest
     commands:
       - npm run cypress:run -- --browser chrome
       - npm run cypress:run -- --browser firefox
       - npm run cypress:run -- --browser edge
+    volumes:
+      - name: cypress_cache
+        path: /root/.cache/Cypress
+
+volumes:
+  - name: cypress_cache
+    temp: {}
