@@ -6,6 +6,7 @@ matrix:
 
 steps:
   - name: install
+    image: cypress/browsers:node16.16.0-chrome107-ff107-edge
     commands:
       - npm install
       - npm run build
