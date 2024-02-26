@@ -6,6 +6,7 @@
     "declaration": true,
     "rootDir": "./src",
     "outDir": "./build",
+    "baseUrl": "./",
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
