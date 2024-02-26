@@ -1,24 +1,10 @@
-pipeline:
-  install_dependencies:
-    name: install_dependencies
-    image: node:latest
-    commands:
-      - npm install
-
-  run_dev_server:
-    name: run_dev_server
-    image: node:latest
-    commands:
-      - npm run dev
-    detach: true
-
-  run_cypress_tests:
-    name: run_cypress_tests
+steps:
+  - name: install_and_test
     image: cypress/browsers:latest
     commands:
       - npm install
-      - npx cypress verify || npx cypress install
+      - npm run dev & # Start the server in the background
       - npx cypress run --browser chrome
       - npx cypress run --browser firefox
       - npx cypress run --browser edge
-
+    detach: false
