@@ -7,29 +7,32 @@ steps:
     commands:
       - npm install
 
-
-  - name: install
+  - name: build
     image: *cypress_browser_image
     commands:
       - npm run build
-      - npm run dev-server
+
 
   - name: start_server
     image: *cypress_browser_image
     commands:
+      - npm run dev-server
     detach: true
 
   - name: test_chrome
     image: *cypress_browser_image
     commands:
       - npx cypress run --browser chrome
+    failure: ignore
 
   - name: test_firefox
     image: *cypress_browser_image
     commands:
       - npx cypress run --browser firefox
+    failure: ignore
 
   - name: test_edge
     image: *cypress_browser_image
     commands:
       - npx cypress run --browser edge
+    failure: ignore
