@@ -12,10 +12,12 @@ steps:
       - npm run build
 
   - name: start_server
+    image: cypress/browsers:node16.16.0-chrome107-ff107-edge
     commands:
       - npm run dev-server
     detach: true
 
   - name: test_${BROWSER}
+    image: cypress/browsers:node16.16.0-chrome107-ff107-edge
     commands:
       - npx cypress run --browser ${BROWSER}
