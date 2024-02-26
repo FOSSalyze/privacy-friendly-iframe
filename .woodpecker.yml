@@ -1,12 +1,35 @@
+variables:
+  - &cypress_browser_image cypress/included:cypress-13.6.6-node-20.11.0-chrome-121.0.6167.184-1-ff-123.0-edge-121.0.2277.128-1
+
 steps:
   - name: install
-    image: cypress/browsers:node16.16.0-chrome107-ff107-edge
+    image: *cypress_browser_image
     commands:
       - npm install
-      - npx cypress verify || npx cypress install
+
+
+  - name: install
+    image: *cypress_browser_image
+    commands:
       - npm run build
-      - npm run dev-server&
-      # We don't want all tests to be executed even if one fails
-      - npx cypress run --browser chrome || >&2 echo "Chrome tests failed"
-      - npx cypress run --browser firefox || >&2 echo "Firefox tests failed"
-      - npx cypress run --browser edge || >&2 echo "Edge tests failed"
+      - npm run dev-server
+
+  - name: start_server
+    image: *cypress_browser_image
+    commands:
+    detach: true
+
+  - name: test_chrome
+    image: *cypress_browser_image
+    commands:
+      - npx cypress run --browser chrome
+
+  - name: test_firefox
+    image: *cypress_browser_image
+    commands:
+      - npx cypress run --browser firefox
+
+  - name: test_edge
+    image: *cypress_browser_image
+    commands:
+      - npx cypress run --browser edge
