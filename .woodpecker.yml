@@ -4,7 +4,6 @@ pipeline:
     image: node:latest
     commands:
       - npm install
-      - $(npm bin)/cypress verify || $(npm bin)/cypress install
 
   run_dev_server:
     name: run_dev_server
@@ -13,10 +12,13 @@ pipeline:
       - npm run dev
     detach: true
 
-  run_cypress_tests:
-    name: run_cypress_tests
-    image: cypress/browsers:latest
-    commands:
-      - npm run cypress:run -- --browser chrome
-      - npm run cypress:run -- --browser firefox
-      - npm run cypress:run -- --browser edge
+run_cypress_tests:
+  name: run_cypress_tests
+  image: cypress/browsers:latest
+  commands:
+    - npm install
+    - npx cypress verify || npx cypress install
+    - npx cypress run --browser chrome
+    - npx cypress run --browser firefox
+    - npx cypress run --browser edge
+
