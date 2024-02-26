@@ -1,18 +1,24 @@
-describe('legal specification', () => {
-    it('no data transfer by default', () => {
-        cy.intercept('https://www.youtube.com/*').as('anyRequest');
+import { runConfigurations } from "./run-configurations";
 
-        cy.visit('/');
+for (const config of runConfigurations) {
+    describe(`technical specification for ${config.name} products`, () => {
+        describe('legal specification', () => {
+            it('no data transfer by default', () => {
+                cy.intercept('https://www.youtube.com/*').as('anyRequest');
 
-        // Not ideal, but the best I could think of - instantly quickly @anyRequest might hide a potential issue 
-        cy.wait(2000);
+                cy.visit(config.baseUrl);
 
-        // No requests made before button click
-        cy.get('@anyRequest.all').should('be.empty');
+                // Not ideal, but the best I could think of - instantly quickly @anyRequest might hide a potential issue 
+                cy.wait(2000);
 
-        cy.get('button').click();
+                // No requests made before button click
+                cy.get('@anyRequest.all').should('be.empty');
 
-        // Requests made after button click
-        cy.get('@anyRequest.all').should('not.be.empty');
+                cy.get('button').click();
+
+                // Requests made after button click
+                cy.get('@anyRequest.all').should('not.be.empty');
+            });
+        });
     });
-});
+}
