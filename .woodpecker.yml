@@ -3,6 +3,9 @@ variables:
   start_server: &start_server
     - npm run dev-server &
 
+when:
+  event: [push, pull_request, tag]
+
 steps:
   - name: install
     image: *cypress_browser_image
@@ -26,9 +29,11 @@ steps:
     commands:
       - <<: *start_server
       - npx cypress run --browser firefox
-
+    runs_on: [ success, failure ]
+    
   - name: test_edge
     image: *cypress_browser_image
     commands:
       - <<: *start_server
       - npx cypress run --browser edge
+    runs_on: [ success, failure ]
