@@ -13,7 +13,8 @@
     }
   },
   "scripts": {
-    "dev": "concurrently --kill-others \"http-server -c-1 ./test/\" \"npm-watch prepare-dev\"",
+    "dev": "concurrently --kill-others \"npm run dev-server\" \"npm-watch prepare-dev\"",
+    "dev-server": "http-server -c-1 ./test/",
     "prepare-dev": "rm -rf ./test/pf-iframe && npm run build &&  cp -r ./dist/ ./test/pf-iframe",
     "build": "npm run pre-build && npm run dist:lib && npm run dist:prod",
     "pre-build": "rm -rf ./build && tsc && cp ./src/*.css ./build",

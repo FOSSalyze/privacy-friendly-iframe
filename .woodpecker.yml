@@ -1,10 +1,20 @@
+matrix:
+  BROWSER:
+    - chrome
+    - firefox
+    - edge
+
 steps:
-  - name: install_and_test
-    image: cypress/browsers:latest
+  - name: install
     commands:
       - npm install
-      - npm run dev & # Start the server in the background
-      - npx cypress run --browser chrome
-      - npx cypress run --browser firefox
-      - npx cypress run --browser edge
-    detach: false
+      - npm run build
+
+  - name: start_server
+    commands:
+      - npm run dev-server
+    detach: true
+
+  - name: test_${BROWSER}
+    commands:
+      - npx cypress run --browser ${BROWSER}
