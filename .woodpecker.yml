@@ -6,22 +6,27 @@ steps:
       - npx cypress verify || npx cypress install
 
   - name: build
+    image: cypress/browsers:node16.16.0-chrome107-ff107-edge
     commands:
       - npm run build
 
   - name: start_server
+    image: cypress/browsers:node16.16.0-chrome107-ff107-edge
     commands:
       - npm run dev-server
     detach: true
 
   - name: test_chrome
+    image: cypress/browsers:node16.16.0-chrome107-ff107-edge
     commands:
       - npx cypress run --browser chrome
 
   - name: test_firefox
+    image: cypress/browsers:node16.16.0-chrome107-ff107-edge
     commands:
       - npx cypress run --browser firefox
 
   - name: test_edge
+    image: cypress/browsers:node16.16.0-chrome107-ff107-edge
     commands:
       - npx cypress run --browser edge
