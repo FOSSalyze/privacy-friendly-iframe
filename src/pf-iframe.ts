@@ -58,7 +58,7 @@ const fallbackDefaultConfig: Required<PFIFrameConfig> = {
 
 const getConfig: (id?: string | null) => Required<PFIFrameConfig> = (id?: string | null) => {
     if (id != null && window._pfiFrameConfig?.byId != null) {
-        return {...fallbackDefaultConfig, ...window._pfiFrameConfig?.default, ...(window._pfiFrameConfig?.byId[id] ?? {})};
+        return {...fallbackDefaultConfig, ...(window._pfiFrameConfig?.default ?? {}), ...(window._pfiFrameConfig?.byId[id] ?? {})};
     }
     return {...fallbackDefaultConfig, ...(window._pfiFrameConfig?.default ?? {})};
 };
