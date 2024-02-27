@@ -164,6 +164,27 @@ for (const config of runConfigurations) {
                         cy.window().its('executed').should('be.true');
                     });
 
+                    it('onConsent provides the <pf-iframe> instance', () => {
+                        cy.visit(config.baseUrl, {
+                            onBeforeLoad: (win: TestWindow) => {
+                                win.caughtData = null;
+                                applyGlobalConfig(
+                                    win,
+                                    {
+                                        onConsent: (self) => {
+                                            win.caughtData = self.getAttribute('id');
+                                        },
+                                    },
+                                    id
+                                );
+                            },
+                        });
+
+                        cy.window().its('caughtData').should('be.null');
+                        cy.get('button').click();
+                        cy.window().its('caughtData').should('equal', pfIFrameId);
+                    });
+
                     it('generateConsentTemplate is used', () => {
                         const newHtml = 'This is the new text.';
                         cy.visit(config.baseUrl, {
@@ -179,6 +200,29 @@ for (const config of runConfigurations) {
                         });
 
                         cy.get('pf-iframe').invoke('html').should('equal', newHtml);
+                    });
+
+                    it('generateConsentTemplate provides expected attributes', () => {
+                        cy.visit(config.baseUrl, {
+                            onBeforeLoad: (win: TestWindow) => {
+                                win.caughtData = null;
+                                applyGlobalConfig(
+                                    win,
+                                    {
+                                        generateConsentTemplate: (width, height, src, self) => {
+                                            win.caughtData = { width, height, src, id: self.getAttribute('id') };
+                                            return 'hello';
+                                        },
+                                    },
+                                    id
+                                );
+                            },
+                        });
+
+                        cy.window().its('caughtData.width').should('equal', '560');
+                        cy.window().its('caughtData.height').should('equal', '315');
+                        cy.window().its('caughtData.src').should('equal', 'https://www.youtube.com/embed/bHQqvYy5KYo?si=qwupSWrLGQcMmRMI');
+                        cy.window().its('caughtData.id').should('equal', pfIFrameId);
                     });
 
                     it('fetchConsentElement is used', () => {
@@ -216,6 +260,26 @@ for (const config of runConfigurations) {
 
                         cy.get('iframe').should('exist');
                     });
+                });
+
+                it('checkExistingConsent provides the <pf-iframe> instance', () => {
+                    cy.visit(config.baseUrl, {
+                        onBeforeLoad: (win: TestWindow) => {
+                            win.caughtData = null;
+                            applyGlobalConfig(
+                                win,
+                                {
+                                    checkExistingConsent: () => {
+                                        win.caughtData = pfIFrameId;
+                                        return true;
+                                    }
+                                },
+                                id
+                            );
+                        },
+                    });
+
+                    cy.window().its('caughtData').should('equal', pfIFrameId);
                 });
             }
 
