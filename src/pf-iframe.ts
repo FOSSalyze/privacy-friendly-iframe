@@ -1,7 +1,7 @@
 // Maps attributes from the PrivacyFriendlyIFrame to the iFrame element
 // Usually it remains 1:1
 interface PFIFrameConfig {
-    onConsent?: () => any;
+    onConsent?: (self: HTMLElement) => any;
     generateConsentTemplate?: (width: string, height: string, src: string, self: HTMLElement) => string;
     fetchConsentElement?: (self: HTMLElement) => HTMLElement | null;
     checkExistingConsent?: (self: HTMLElement) => boolean;
@@ -43,7 +43,7 @@ const observedAttributes = [
     ...Array.from(attributeMap.keys())];
 
 const fallbackDefaultConfig: Required<PFIFrameConfig> = {
-    onConsent: () => {},
+    onConsent: (self) => {},
     generateConsentTemplate: (width: string, height: string, src: string, self: HTMLElement) => `
     <div class="pf-iframe--consent-container" style="width: ${width}px; height: ${height}px">
         <div class="pf-iframe--consent-content-container">
@@ -100,7 +100,7 @@ class PrivacyFriendlyIFrame extends HTMLElement {
             
             this.innerHTML = this.generateConsentTemplate(width, height, src, this); 
             this.fetchConsentElement(this)?.addEventListener('click', () => {
-                this.onConsent(); 
+                this.onConsent(this); 
                 this.accept()
             });
         }

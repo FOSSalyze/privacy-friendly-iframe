@@ -1,5 +1,5 @@
 export interface PFIFrameConfig {
-    onConsent?: () => any;
+    onConsent?: (self: HTMLElement) => any;
     generateConsentTemplate?: (width: string, height: string, src: string, self: HTMLElement) => string;
     fetchConsentElement?: (self: HTMLElement) => HTMLElement | null;
     checkExistingConsent?: (self: HTMLElement) => boolean;
@@ -7,6 +7,7 @@ export interface PFIFrameConfig {
 
 export type TestWindow = {
     executed: boolean;
+    caughtData: any;
     _pfiFrameConfig?: {
         default?: PFIFrameConfig;
         byId?: {
