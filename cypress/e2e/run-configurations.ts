@@ -22,3 +22,5 @@ export const attributeMap = [
     {pfIFrameName: 'iframe-class', iFrameName: 'class', exampleValue: 'inner-iframe-class'},
     {pfIFrameName: 'iframe-name', iFrameName: 'name', exampleValue: 'inner-iframe-name'}
 ];
+
+export const pfIFrameId = 'test-pf-iframe';
