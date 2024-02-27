@@ -6,3 +6,4 @@
 
 # This should be always freshly built and copied in
 /test/pf-iframe/
+/test/prod/
