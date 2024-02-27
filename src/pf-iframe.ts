@@ -92,7 +92,7 @@ class PrivacyFriendlyIFrame extends HTMLElement {
 
     connectedCallback() {
         if(this.checkExistingConsent(this)) {
-            this.mountIFrame();
+            this.showIFrame = true;
         } else {
             const width = this.getAttribute('width') ?? '300';
             const height = this.getAttribute('height') ?? '150';
