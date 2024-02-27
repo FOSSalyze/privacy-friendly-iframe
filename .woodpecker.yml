@@ -23,17 +23,21 @@ steps:
     commands:
       - <<: *start_server
       - npx cypress run --browser chrome
+    when:
+      - status: [ success, failure ]
 
   - name: test_firefox
     image: *cypress_browser_image
     commands:
       - <<: *start_server
       - npx cypress run --browser firefox
-    runs_on: [ success, failure ]
-    
+    when:
+      - status: [ success, failure ]
+
   - name: test_edge
     image: *cypress_browser_image
     commands:
       - <<: *start_server
       - npx cypress run --browser edge
-    runs_on: [ success, failure ]
+    when:
+      - status: [ success, failure ]
