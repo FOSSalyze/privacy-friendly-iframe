@@ -2,7 +2,7 @@ when:
   event: tag
 
 steps:
-  - npm: zipping
+  - name: zipping
     image: node:20.11.1-slim
     commands:
       - mkdir -p dist/archives
