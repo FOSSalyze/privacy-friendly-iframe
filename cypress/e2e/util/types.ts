@@ -1,10 +1,4 @@
-export interface PFIFrameConfig {
-    onConsent?: (self: HTMLElement) => any;
-    generateConsentTemplate?: (width: string, height: string, src: string, self: HTMLElement) => string;
-    fetchConsentElement?: (self: HTMLElement) => HTMLElement | null;
-    checkExistingConsent?: (self: HTMLElement) => boolean;
-}
-
+import { PFIFrameConfig } from '../../../src/types';
 export type TestWindow = {
     executed: boolean;
     caughtData: any;

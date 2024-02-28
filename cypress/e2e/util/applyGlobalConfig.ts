@@ -1,4 +1,5 @@
-import { PFIFrameConfig, TestWindow } from './types';
+import { PFIFrameConfig } from "../../../src/types";
+import { TestWindow } from "./types";
 
 export const applyGlobalConfig = (testWindow: TestWindow, config: PFIFrameConfig, id?: string | null) => {
     if (id == null) {

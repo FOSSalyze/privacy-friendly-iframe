@@ -1,6 +1,6 @@
 export const runConfigurations = [
-    {baseUrl: '/lib/', name: 'Library'},
-    {baseUrl: '/prod/', name: 'Production'},
+    // {baseUrl: '/lib/', name: 'Library'},
+    {baseUrl: '/', name: 'Production'},
 ]
 
 export const attributeMap = [
