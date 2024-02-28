@@ -58,6 +58,7 @@ steps:
   - name: create_release
     image: woodpeckerci/plugin-github-release
     settings:
+      discussion-category: ""
       files:
         - dist/archives/*.tar.gz
         - dist/archives/*.zip
