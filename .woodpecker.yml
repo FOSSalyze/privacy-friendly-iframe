@@ -46,7 +46,7 @@ steps:
   - name: archiving
     image: *alpine
     commands:
-      - apk add tar zip coreutils
+      - apk add tar zip findutils
       - mkdir -p dist/archives
       - find dist/prod -type f -printf "%P\n" | tar -czf "dist/archives/pf-iframe-${CI_COMMIT_TAG##v}-prod.tar.gz" -C dist/prod -T -
       - find dist/lib -type f -printf "%P\n" | tar -czf "dist/archives/pf-iframe-${CI_COMMIT_TAG##v}-lib.tar.gz" -C dist/lib -T -
