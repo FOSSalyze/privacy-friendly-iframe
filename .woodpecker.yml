@@ -1,5 +1,6 @@
 variables:
   cypress_browser_image: &cypress_browser_image 'cypress/included:cypress-13.6.6-node-20.11.0-chrome-121.0.6167.184-1-ff-123.0-edge-121.0.2277.128-1'
+  node_image: &node_image 'node:20.11.1-slim'
   start_server: &start_server
     - npm run dev-server &
 
@@ -42,5 +43,26 @@ steps:
     when:
       - status: [ success, failure ]
 
-depends_on:
-  - build
+  - name: archiving
+    # A bit silly to use node for zipping, but alpine doesn't have zip by default
+    image: node:20.11.1-slim
+    commands:
+      - mkdir -p dist/archives
+      - find dist/prod -type f -printf "%P\n" | tar -czf "dist/archives/pf-iframe-${CI_COMMIT_TAG##v}-prod.tar.gz" -C dist/prod -T -
+      - find dist/lib -type f -printf "%P\n" | tar -czf "dist/archives/pf-iframe-${CI_COMMIT_TAG##v}-lib.tar.gz" -C dist/prod -T -
+      - find dist/prod -type f -exec sh -c "zip dist/archives/pf-iframe-${CI_COMMIT_TAG##v}-prod.zip -j {}" \;
+      - find dist/lib -type f -exec sh -c "zip dist/archives/pf-iframe-${CI_COMMIT_TAG##v}-lib.zip -j {}" \;
+    when:
+      event: tag
+
+  - name: create_release
+    image: woodpeckerci/plugin-github-release
+    settings:
+      files:
+        - dist/archives/*.tar.gz
+        - dist/archives/*.zip
+      title: ${CI_COMMIT_TAG##v}
+      api-key:
+        from_secret: FOSSalyze_RELEASE_GITHUB_TOKEN
+    when:
+      event: tag
