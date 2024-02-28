@@ -41,3 +41,6 @@ steps:
       - npx cypress run --browser edge
     when:
       - status: [ success, failure ]
+
+depends_on:
+  - build

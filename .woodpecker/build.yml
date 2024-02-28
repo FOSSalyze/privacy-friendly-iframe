@@ -1,0 +1,16 @@
+variables:
+  node_image: &node_image 'node:20.11.1-slim'
+
+when:
+  event: [push, pull_request, tag]
+
+steps:
+  - name: install
+    image: *node_image
+    commands:
+      - npm install
+
+  - name: build
+    image: *node_image
+    commands:
+      - npm run build
