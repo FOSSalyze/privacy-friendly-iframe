@@ -49,7 +49,7 @@ steps:
     commands:
       - mkdir -p dist/archives
       - find dist/prod -type f -printf "%P\n" | tar -czf "dist/archives/pf-iframe-${CI_COMMIT_TAG##v}-prod.tar.gz" -C dist/prod -T -
-      - find dist/lib -type f -printf "%P\n" | tar -czf "dist/archives/pf-iframe-${CI_COMMIT_TAG##v}-lib.tar.gz" -C dist/prod -T -
+      - find dist/lib -type f -printf "%P\n" | tar -czf "dist/archives/pf-iframe-${CI_COMMIT_TAG##v}-lib.tar.gz" -C dist/lib -T -
       - find dist/prod -type f -exec sh -c "zip dist/archives/pf-iframe-${CI_COMMIT_TAG##v}-prod.zip -j {}" \;
       - find dist/lib -type f -exec sh -c "zip dist/archives/pf-iframe-${CI_COMMIT_TAG##v}-lib.zip -j {}" \;
     when:
