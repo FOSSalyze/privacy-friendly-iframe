@@ -5,6 +5,11 @@ export interface PFIFrameConfig {
     checkExistingConsent?: (self: HTMLElement) => boolean;
 }
 
+export interface PFIFrameTranslation {
+    consentPromptMessage: string;
+    consentButtonLabel: string;
+}
+
 declare global {
     interface Window {
         _pfiFrameConfig?: {
@@ -12,6 +17,7 @@ declare global {
             byId?: {
                 [id: string]: PFIFrameConfig;
             };
-        }
+            translation?: PFIFrameTranslation;
+        };
     }
 }
