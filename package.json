@@ -16,10 +16,16 @@
     "dev": "concurrently --kill-others \"npm run dev-server\" \"npm-watch prepare-dev\"",
     "dev-server": "http-server -c-1 ./test/",
     "prepare-dev": "rm -rf ./test/pf-iframe && npm run build &&  cp -r ./dist/prod ./test/pf-iframe",
-    "build": "npm run pre-build && npm run dist:lib && npm run dist:prod",
+    "build": "npm run pre-build && npm run dist:lib && npm run dist:prod && npm run copy:non-code",
     "pre-build": "rm -rf ./build && tsc && cp ./src/*.css ./build",
     "dist:lib": "rm -rf ./dist/lib && mkdir -p ./dist/lib && cp -r ./build/* ./dist/lib",
     "dist:prod": "rm -rf ./dist/prod && mkdir -p ./dist/prod && webpack --config ./webpack.config.js && cleancss -o ./dist/prod/pf-iframe.min.css ./build/pf-iframe.css",
+    
+    "copy:non-code": "npm run copy:packagejson && npm run copy:readme && npm run copy:license",
+    "copy:packagejson": "cp ./package.json ./dist/lib/package.json",
+    "copy:readme": "cp ./README.md ./dist/lib/README.md && cp ./README.md ./dist/prod/README.md",
+    "copy:license": "cp ./LICENSE ./dist/lib/LICENSE && cp ./LICENSE ./dist/prod/LICENSE",
+    
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
