@@ -2,7 +2,7 @@
 
 # Privacy Friendly iFrame
 
-The `<iframe>` tag will transmit user data (by making a request on behalf of the user) to the website specified in the src and potentially more websites as they are loaded by the iframed-website. If the user has not accepted this transfer of data you are most likely violating the General Data Protection Regulation (GDPR).
+The `<iframe>` tag will transmit user data (by making a request on behalf of the user) to the website specified in the `src`-attribute and potentially more websites as they are loaded by the iframed-website. If the user has not accepted this transfer of data you are most likely violating the General Data Protection Regulation (GDPR) or other data privacy laws.
 
 This project provides a near drop-in replacement for the iframe tag as a webcomponent. All that needs to be done is to:
 
@@ -11,6 +11,10 @@ This project provides a near drop-in replacement for the iframe tag as a webcomp
 3. Change `id`, `class` and `name` that should be positioned on the `<iframe>` to `iframe-id`, `iframe-class` and `iframe-name` respectively.
 
 By default, the user will be asked and informed about the transfer of information before it occurs. However, you can also customize the appearance and behavior accordingly.
+
+## Download
+
+You can download this software on the [release page](https://github.com/FOSSalyze/privacy-friendly-iframe/releases). The README will assume the usage of the production output.
 
 ## Example Usage
 
