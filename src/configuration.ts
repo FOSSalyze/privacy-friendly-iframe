@@ -25,7 +25,14 @@ export const attributeMap = new Map<string, string>([
 export const observedAttributes = ['id', 'showiframe', ...Array.from(attributeMap.keys())];
 
 const defaultReplaceConsentTemplateVariables = (input: string, src: string): string => {
-    const origin = new URL(src).host;
+    let origin: string;
+    try {
+        origin = new URL(src).host
+    } catch (e) {
+        console.log('Could not get the host from the given src.');
+        origin = 'ERROR';
+    }
+    
     return input.replace(/\$\{src\}/g, src).replace(/\$\{domain\}/g, origin);
 };
 
