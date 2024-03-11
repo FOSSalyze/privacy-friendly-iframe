@@ -24,7 +24,7 @@
     "cypress:run": "cypress run"
   },
   "author": "Timothy Gillespie (FOSSalyze GmbH)",
-  "license": "GPL-3.0-only",
+  "license": "MIT",
   "devDependencies": {
     "clean-css-cli": "^5.6.3",
     "concurrently": "^8.2.2",
