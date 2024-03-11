@@ -205,3 +205,7 @@ For example, consent on the basis of the `src` value could be done in the follow
     <link rel="stylesheet" href="/pf-iframe.min.css"><link>
 </head>
 ```
+
+## License
+
+This library is provided under the MIT license. Do note and respect the of inclusion of copyright and the copyright notice. This could be addressed with a separate listing on your website stating all copyrights and software components that are used. Such a site does not have to be placed prominently, but it also should not be intentionally hidden or obscured. You may also declare that this software is licensed under the MIT license instead of reciting the entire license text in order to save on file size when critical.
