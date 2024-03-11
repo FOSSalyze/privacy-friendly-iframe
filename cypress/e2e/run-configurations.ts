@@ -1,6 +1,5 @@
 export const runConfigurations = [
-    // {baseUrl: '/lib/', name: 'Library'},
-    {baseUrl: '/', name: 'Production'},
+    {name: 'Production', baseUrl: '/', noTranslationUrl: '/no-translation.html', youtubeUrl: 'https://www.youtube.com/embed/bHQqvYy5KYo?si=qwupSWrLGQcMmRMI'},
 ]
 
 export const attributeMap = [

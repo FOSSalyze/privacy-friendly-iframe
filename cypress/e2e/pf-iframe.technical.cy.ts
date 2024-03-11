@@ -390,5 +390,63 @@ for (const config of runConfigurations) {
             });
 
         });
+
+        describe('translation', () => {
+            it('english translation is applied', () => {
+                cy.visit(config.baseUrl);
+
+                cy.get('pf-iframe').invoke('text').should('contain', 'By continuing, you consent');
+                cy.get('button').invoke('text').should('contain', 'Yes, proceed');
+            });
+
+            it('english templates successfully', () => {
+                cy.visit(config.baseUrl);
+
+                cy.get('pf-iframe').invoke('text').should('contain', config.youtubeUrl);
+                cy.get('pf-iframe').invoke('text').should('contain', ' www.youtube.com.');
+            });
+
+            it('translation passed to window is applied', () => {
+                cy.visit(config.noTranslationUrl, {
+                    onBeforeLoad: (win: TestWindow) => {
+                        win._pfiFrameConfig = {
+                            translation: {
+                                consentPromptMessage: 'This is a custom message',
+                                consentButtonLabel: 'Custom label',
+                            },
+                        };
+                    },
+                });
+
+                cy.get('pf-iframe').invoke('text').should('contain', 'This is a custom message');
+                cy.get('button').invoke('text').should('contain', 'Custom label');
+
+                cy.get('pf-iframe').invoke('text').should('not.contain', 'By continuing, you consent');
+                cy.get('button').invoke('text').should('not.contain', 'Yes, proceed');
+
+                // Checking that no template is applied as well as non is given
+                cy.get('pf-iframe').invoke('text').should('not.contain', 'youtube');
+                cy.get('button').invoke('text').should('not.contain', 'youtube');
+            });
+
+            it('templating works with custom translation', () => {
+                cy.visit(config.noTranslationUrl, {
+                    onBeforeLoad: (win: TestWindow) => {
+                        win._pfiFrameConfig = {
+                            translation: {
+                                consentPromptMessage: 'This is the src: ${src}. This is the domain: ${domain}.',
+                                consentButtonLabel: 'This is the src: ${src}. This is the domain: ${domain}.',
+                            },
+                        };
+                    },
+                });
+
+                cy.get('pf-iframe').invoke('text').should('contain', config.youtubeUrl);
+                cy.get('pf-iframe').invoke('text').should('contain', ' www.youtube.com.');
+
+                cy.get('button').invoke('text').should('contain', config.youtubeUrl);
+                cy.get('button').invoke('text').should('contain', ' www.youtube.com.');
+            });
+        })
     });
 }

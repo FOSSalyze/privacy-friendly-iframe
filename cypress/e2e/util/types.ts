@@ -1,4 +1,4 @@
-import { PFIFrameConfig } from '../../../src/types';
+import { PFIFrameConfig, PFIFrameTranslation } from '../../../src/types';
 export type TestWindow = {
     executed: boolean;
     caughtData: any;
@@ -7,5 +7,6 @@ export type TestWindow = {
         byId?: {
             [id: string]: PFIFrameConfig;
         };
+        translation?: PFIFrameTranslation;
     };
 } & Cypress.AUTWindow;
