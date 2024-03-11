@@ -1,3 +1,7 @@
+// Copyright (c) 2024 FOSSalyze GmbH
+// Copyright (c) 2024 Timothy Gillespie
+// SPDX-License-Identifier: MIT
+
 import { PFIFrameConfig } from './types';
 
 // Maps attributes from the PrivacyFriendlyIFrame to the iFrame element

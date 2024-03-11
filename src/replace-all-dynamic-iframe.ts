@@ -1,3 +1,8 @@
+// Copyright (c) 2024 FOSSalyze GmbH
+// Copyright (c) 2024 Timothy Gillespie
+// SPDX-License-Identifier: MIT
+
+
 // This approach will replace all iframes with a custom element pf-iframe when they are being injected by JS or any other source of modification
 // This is not reliable, because the initial iframe is injected and then quickly replaced by the custom element
 // This will abort the connection the iframe would make, it's better than nothing - but does not guarantee no data being transferred

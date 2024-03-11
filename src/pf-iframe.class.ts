@@ -1,3 +1,7 @@
+// Copyright (c) 2024 FOSSalyze GmbH
+// Copyright (c) 2024 Timothy Gillespie
+// SPDX-License-Identifier: MIT
+
 import { attributeMap, observedAttributes, fallbackDefaultConfig, isAttributeTrue } from './configuration';
 import { PFIFrameConfig } from "./types";
 

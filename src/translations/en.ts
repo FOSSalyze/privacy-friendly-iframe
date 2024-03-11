@@ -1,3 +1,8 @@
+// Copyright (c) 2024 FOSSalyze GmbH
+// Copyright (c) 2024 Timothy Gillespie
+// SPDX-License-Identifier: MIT
+
+
 import { assignTranslationToWindow } from "../assign-translation-to-window";
 
 export const enTranslation = {
