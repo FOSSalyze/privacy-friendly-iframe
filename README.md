@@ -14,17 +14,18 @@ By default, the user will be asked and informed about the transfer of informatio
 
 ## Example Usage
 
-There are currently no provided builts for this project. The output, however, will be a JavaScript file which will register custom elements and a CSS file which will provide styling. Assuming you have both of on the root directory of the same webserver as `/pf-iframe.js` and `/pf-iframe.css` then you could import these in the following way:
+There are currently no provided builts for this project. The output, however, will be a JavaScript file which will register custom elements and a CSS file which will provide styling. Assuming you have both on the root directory of the same webserver as `/pf-iframe.min.js` and `/pf-iframe.min.css` along with an English translation under `/translations/en.min.js` then you could import these in the following way:
 
 ```html
 <head>
     <!-- ... your other header code ... -->
-    <script src="/pf-iframe.js"></script>
-    <link rel="stylesheet" href="/pf-iframe.css"><link>
+    <script src="/translations/en.min.js"></script>
+    <script src="/pf-iframe.min.js"></script>
+    <link rel="stylesheet" href="/pf-iframe.min.css"><link>
 </head>
 ```
 
-Then you can simply use the pf-iframe in your code as though it is normal iframe.
+Then you can simply use the `<pf-iframe>` in your code as though it is normal `<iframe>`.
 
 ```html
 <body>
@@ -34,26 +35,11 @@ Then you can simply use the pf-iframe in your code as though it is normal iframe
 
 You will now see a consent screen before any data is transmitted to the iframe target and only a click on "Yes" will resolve that.
 
-![A screenshot of the consent screen. Gray background with white text that reads "Do you want to view this content? It will transmit data to https://www.youtube.com/embed/bHQqvYy5KYo?si=qwupSWrLGQcMmRMI." and a green button stating "Yes" below it.](./images/screenshot-consent-screen.jpg)
+![A screenshot of the consent screen. Gray background with white text and a green button stating to consent with below the text.](./images/screenshot-consent-screen.jpg)
 
 ## Customization
 
-The Privacy Friendly iFrame can be customized by placing the respective information on the window element. The configuration can be specified as `default` - meaning it will apply to all `<pf-iframe>` elements - or be given by id resulting in only the `<pf-iframe>` element being affected that has the given id. When both are specified then configuration are merged whereby the id-specific configuration has priority and will cancel out a default configuration. The fallback configuration, that applies if no configuration is passed is as follows:
-
-```js
-const fallbackDefaultConfig = {
-    onConsent: (self) => {},
-    generateConsentTemplate: (width, height, src, self) => `
-        <div class="pf-iframe--consent-container" style="width: ${width}px; height: ${height}px">
-            <div class="pf-iframe--consent-content-container">
-                <p class="pf-iframe--consent-message">Do you want to view this content? It will transmit data to ${src}.</p>
-                <button class="pf-iframe--consent-button">Yes</button>
-            </div>
-        </div>`,
-    fetchConsentElement: (self) => self.querySelector('button'),
-    checkExistingConsent: (self) => false
-};
-```
+The Privacy Friendly iFrame can be customized by placing the respective information on the window element. The configuration can be specified as `default` - meaning it will apply to all `<pf-iframe>` elements - or be given by id resulting in only the `<pf-iframe>` element being affected that has the given id. When both are specified then configuration are merged whereby the id-specific configuration has priority and will cancel out a default configuration. The fallback configuration, that applies if no configuration is passed can be found under [./src/configuration.ts](./src/configuration.ts).
 
 Every single configuration can be overwritten. For example if you would like to log when consent has been given you can do it in the following way with the default variant:
 
@@ -67,8 +53,9 @@ Every single configuration can be overwritten. For example if you would like to 
         };
     </script>
     <!-- This script should ideally be loaded after the config on the window object has been set -->
-    <script src="/pf-iframe.js"></script>
-    <link rel="stylesheet" href="/pf-iframe.css"><link>
+    <script src="/translations/en.min.js"></script>
+    <script src="/pf-iframe.min.js"></script>
+    <link rel="stylesheet" href="/pf-iframe.min.css"><link>
 </head>
 ```
 
@@ -86,8 +73,9 @@ Specifically, for one id it would be passed like provided like this:
         };
     </script>
     <!-- This script should ideally be loaded after the config on the window object has been set -->
-    <script src="/pf-iframe.js"></script>
-    <link rel="stylesheet" href="/pf-iframe.css"><link>
+    <script src="/translations/en.min.js"></script>
+    <script src="/pf-iframe.min.js"></script>
+    <link rel="stylesheet" href="/pf-iframe.min.css"><link>
 </head>
 <body>
         <pf-iframe id="exampleId" width="560" height="315" src="https://www.youtube.com/embed/bHQqvYy5KYo?si=qwupSWrLGQcMmRMI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></pf-iframe>
@@ -96,16 +84,7 @@ Specifically, for one id it would be passed like provided like this:
 
 ## Changing the Consent Screen Template
 
-By default the consent screen template will be:
-
-```html
-<div class="pf-iframe--consent-container" style="width: ${width}px; height: ${height}px">
-    <div class="pf-iframe--consent-content-container">
-        <p class="pf-iframe--consent-message">Do you want to view this content? It will transmit data to ${src}.</p>
-        <button class="pf-iframe--consent-button">Yes</button>
-    </div>
-</div>
-```
+The consent screen template is generated by a function that can be easily substituted and receives the `width`, `height`, `src` and the HTML element itself.
 
 The `width`, `height` and `src` will be the same as attribute values that have been passed to the iframe. When they are not given they will default to a value:
 
@@ -147,12 +126,41 @@ Changing the template with the default scope might look as follows in code:
         };
     </script>
     <!-- This script should ideally be loaded after the config on the window object has been set -->
-    <script src="/pf-iframe.js"></script>
-    <link rel="stylesheet" href="/pf-iframe.css"><link>
+    <script src="/translations/en.min.js"></script>
+    <script src="/pf-iframe.min.js"></script>
+    <link rel="stylesheet" href="/pf-iframe.min.css"><link>
 </head>
 ```
 
 This custom element does not create a shadow DOM so the styling can simply be done via CSS without any further considerations. When modifying the design without modifying the template one can resort to the default style as a starting point [here](./src/pf-iframe.css). The component contains no styling itself.
+
+## Translations
+
+When the **template generation has not been customized** one can provide their own translation as well by using the window object.
+
+<head>
+    <script lang="js">
+        window._pfiFrameConfig = {
+            translation: {
+                consentPromptMessage: 'My custom consent message. This is the entire URL: ${src}. This is only the domain: ${domain}.',
+                consentButtonLabel: 'My custom consent label. It can also display the full URL (${src}) and domain (${domain}).'
+            }
+        };
+    </script>
+    <!-- This script should ideally be loaded after the config on the window object has been set -->
+    <!--Note, that you do not need the translation file anymore-->
+    <script src="/pf-iframe.min.js"></script>
+    <link rel="stylesheet" href="/pf-iframe.min.css"><link>
+</head>
+
+Within the translation you can use special values which will be replaced with the respective value:
+
+- `${src}` - The full, unaltered src given to `<pf-iframe>`
+- `${domain}` - The domain of the given src. For example: `www.youtube.com`
+
+When you provide your custom translation in this way, you should not use the translation files that are included as they could overwrite your translations and increase the load size on the user end.
+
+You will find the available translations under [./src/translations](./src/translations).
 
 ## Using Outside Consent Sources
 
@@ -192,7 +200,8 @@ For example, consent on the basis of the `src` value could be done in the follow
         };
     </script>
     <!-- This script should ideally be loaded after the config on the window object has been set -->
-    <script src="/pf-iframe.js"></script>
-    <link rel="stylesheet" href="/pf-iframe.css"><link>
+    <script src="/translations/en.min.js"></script>
+    <script src="/pf-iframe.min.js"></script>
+    <link rel="stylesheet" href="/pf-iframe.min.css"><link>
 </head>
 ```
