@@ -2,6 +2,7 @@
   "name": "@fossalyze/privacy-friendly-iframe",
   "version": "1.0.0",
   "description": "Delay rendering an iframe until consent has been provided.",
+  "main": "index.js",
   "watch": {
     "prepare-dev": {
       "patterns": [
