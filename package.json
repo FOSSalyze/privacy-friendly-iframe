@@ -1,6 +1,6 @@
 {
   "name": "@fossalyze/privacy-friendly-iframe",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Delay rendering an iframe until consent has been provided.",
   "main": "index.js",
   "watch": {
@@ -21,12 +21,10 @@
     "pre-build": "rm -rf ./build && tsc && cp ./src/*.css ./build",
     "dist:lib": "rm -rf ./dist/lib && mkdir -p ./dist/lib && cp -r ./build/* ./dist/lib",
     "dist:prod": "rm -rf ./dist/prod && mkdir -p ./dist/prod && webpack --config ./webpack.config.js && cleancss -o ./dist/prod/pf-iframe.min.css ./build/pf-iframe.css",
-    
     "copy:non-code": "npm run copy:packagejson && npm run copy:readme && npm run copy:license",
     "copy:packagejson": "cp ./package.json ./dist/lib/package.json",
     "copy:readme": "cp ./README.md ./dist/lib/README.md && cp ./README.md ./dist/prod/README.md",
     "copy:license": "cp ./LICENSE ./dist/lib/LICENSE && cp ./LICENSE ./dist/prod/LICENSE",
-    
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
